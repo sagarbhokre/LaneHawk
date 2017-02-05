@@ -30,7 +30,7 @@ Following are the sub-steps involved
 All input images for camera calibration could be found in [camera_cal folder](https://github.com/sagarbhokre/LaneHawk/tree/master/camera_cal) and all undistorted images could be found in [undistorted_camera_cal folder]((https://github.com/sagarbhokre/LaneHawk/tree/master/undistorted_camera_cal)
 
 One such output is as shown below:
-![Input distorted image](https://github.com/sagarbhokre/LaneHawk/blob/master/camera_cal/calibration1.jpg) ![Undistorted image](https://github.com/sagarbhokre/LaneHawk/blob/master/undistorted_camera_cal/calibration1.jpg)
+![Input distorted image](https://github.com/sagarbhokre/LaneHawk/blob/master/camera_cal/calibration1.jpg "Input distorted image") ![Undistorted image](https://github.com/sagarbhokre/LaneHawk/blob/master/undistorted_camera_cal/calibration1.jpg "Undistorted image")
 
 
 ## Preprocess input images
@@ -67,7 +67,7 @@ Location of these form starting points for detecting lane markers
 - This way the points are gathered throughout the execution for an image
 
 One of the representations of lane markings captured in "DEBUG" mode is as shown below 
-![Pixels considered for detecting lanes with corresponding sliding windows](https://github.com/sagarbhokre/LaneHawk/blob/master/debug_images/Debug_lane_markings.jpg)
+![Pixels considered for detecting lanes with corresponding sliding windows](https://github.com/sagarbhokre/LaneHawk/blob/master/debug_images/Debug_lane_markings.jpg "Pixels considered for detecting lanes with corresponding sliding windows")
     
 ### Fit a second order polynomial over detected lane pixels
 A polynomial of order 2 is fit over points for left and right lane markings separately using polyfit() API
