@@ -25,7 +25,7 @@ Following are the sub-steps involved
  7. Verify calibration parameters by distorting input images
  8. Store calibration parameters in a pickle file: Calibration parameters of a camera remain the same hence this computation can be avoided everytime we execute the code. Hence the parameters once computed are stored in file "cam_calib_params.pkl". If this file already exists, the parameters are not computed again but loaded from the pkl file.
     
-All input images for camera calibration could be found in [camera_cal folder](https://github.com/sagarbhokre/LaneHawk/tree/master/camera_cal) and all undistorted images could be found in [undistorted_camera_cal folder]((https://github.com/sagarbhokre/LaneHawk/tree/master/undistorted_camera_cal)
+All input images for camera calibration could be found in [camera_cal folder](https://github.com/sagarbhokre/LaneHawk/tree/master/camera_cal) and all undistorted images could be found in [undistorted_camera_cal folder](https://github.com/sagarbhokre/LaneHawk/tree/master/undistorted_camera_cal)
 
 One such output is as shown below:
 ![Input distorted image](https://github.com/sagarbhokre/LaneHawk/blob/master/camera_cal/calibration1.jpg "Input distorted image")
@@ -37,17 +37,17 @@ One such output is as shown below:
 
 ## Preprocess input images
 
-#### Apply distortion correction to raw images
+#### - Apply distortion correction to raw images
 This helps to correct out camera distortion which could be used to check if the lane markers are curved and also compute their curvature 
-#### Convert undistorted image to RGB format
+#### - Convert undistorted image to RGB format
 Input image captured using imread() or capture.read() APIs is in BGR format. This is converted to RGB format
  
-#### Filter out pixels based on thresholds for gradients along x and y orientation
-#### Filter out pixels based on imagnitude and direction gradient thresholds
-#### Filter out yellow and white pixels with good amount of saturation
-#### Filter out yellow and white pixels with good amount of saturation
-#### Filter out noise using gaussian noise filter
-#### Cut out Region Of Interest(ROI) and apply perspective transform to detect lane marker orientation
+#### - Filter out pixels based on thresholds for gradients along x and y orientation
+#### - Filter out pixels based on imagnitude and direction gradient thresholds
+#### - Filter out yellow and white pixels with good amount of saturation
+#### - Filter out yellow and white pixels with good amount of saturation
+#### - Filter out noise using gaussian noise filter
+#### - Cut out Region Of Interest(ROI) and apply perspective transform to detect lane marker orientation
 Following steps are involved in transforming the input image
 1. Specify source ROI Trapeziod
 2. Mask Input image with ROI trapezoid
@@ -57,11 +57,11 @@ Following steps are involved in transforming the input image
 6. Warp input image based on perspective transform matrix just computed (this gives us bird's eye view of the ROI)
 
 ## Fit a second order polynomial over lane markings for both lanes separately
-#### Compute histogram of binary image along y axis
-#### Find peaks in left and right halves of the histogram.
+#### - Compute histogram of binary image along y axis
+#### - Find peaks in left and right halves of the histogram.
 Location of these form starting points for detecting lane markers
-#### Define width, height, confidence pixel count for the window
-#### Step through the window starting from bottom to the top of binary image
+#### - Define width, height, confidence pixel count for the window
+#### - Step through the window starting from bottom to the top of binary image
 - In this step a window boundary is computed every iteration until we reach the top of image. 
 - In each window we try to find number of non-zero pixels, store and count them
 - If the number of pixels in those windows is more than minpix count the window is considered to contain a lane marking and is marked as a good window for updating lane start for upcoming iteration
@@ -72,7 +72,7 @@ One of the representations of lane markings captured in "DEBUG" mode is as shown
 ![Pixels considered for detecting lanes with corresponding sliding windows](https://github.com/sagarbhokre/LaneHawk/blob/master/debug_images/Debug_lane_markings.jpg "Pixels considered for detecting lanes with corresponding sliding windows")
 "Pixels considered for detecting lanes with corresponding sliding windows"
     
-#### Fit a second order polynomial over detected lane pixels
+#### - Fit a second order polynomial over detected lane pixels
 A polynomial of order 2 is fit over points for left and right lane markings separately using polyfit() API
     
 ## Overlay the lane markings on input image

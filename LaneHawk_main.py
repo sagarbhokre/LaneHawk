@@ -338,8 +338,6 @@ def calculate_curvature(yvals, xl, xr):
     left_curverad = ((1 + (2*lfit_cr[0]*y_eval + lfit_cr[1])**2)**1.5) / np.absolute(2*lfit_cr[0])/100
     right_curverad = ((1 + (2*rfit_cr[0]*y_eval + rfit_cr[1])**2)**1.5) / np.absolute(2*rfit_cr[0])/100
 
-    print lfit_cr[2], xl[-1]
-    print rfit_cr[2], xr[-1]
     # Compute centre of lane markings and centre of vehicle
     off_centre_pixels = ((IMAGE_WIDTH/2) - (xl[-1] + xr[-1])/2)
     off_centre_m = off_centre_pixels*ym_per_pix/100
