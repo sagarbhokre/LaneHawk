@@ -1,5 +1,6 @@
 import numpy as np
-ROI = {'t':0.6300, 'b':0.0700, 'tw':0.1340, 'bw':0.0490}
+ALGORITHM = 2
+ROI = {'t':0.6300, 'b':0.0700, 'tw':0.1300, 'bw':0.0000}
 GRADX_MIN = 65
 GRADX_MAX = 255
 GRADY_MIN = 48
