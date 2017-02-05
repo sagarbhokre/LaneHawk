@@ -1,0 +1,14 @@
+import numpy as np
+ROI = {'t':0.6300, 'b':0.0700, 'tw':0.1340, 'bw':0.0490}
+GRADX_MIN = 65
+GRADX_MAX = 255
+GRADY_MIN = 48
+GRADY_MAX = 254
+MAG_MIN   = 171
+MAG_MAX   = 255
+DIR_MIN   = 0.30
+DIR_MAX   = 1.40
+HLS_H_MIN = 0
+HLS_H_MAX = 61
+HLS_S_MIN = 101
+HLS_S_MAX = 255
