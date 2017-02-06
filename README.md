@@ -105,6 +105,13 @@ Output of execution is input image with ROI overlayed along with output image co
 
 
 [![EXECUTION_PREVIEW](http://img.youtube.com/vi/R97Ifw_2rio/0.jpg)](http://www.youtube.com/watch?v=R97Ifw_2rio "Output video stored during execution")
-#### Output video saved during execution
-
 https://www.youtube.com/watch?v=R97Ifw_2rio
+#### Output video saved during execution (Uploaded on youtube)
+
+
+
+An output video is also included in the project
+
+[![EXECUTION_PREVIEW](http://img.youtube.com/vi/R97Ifw_2rio/0.jpg)](https://github.com/sagarbhokre/LaneHawk/blob/master/output.avi "Output video included in project")
+https://github.com/sagarbhokre/LaneHawk/blob/master/output.avi
+#### Output video included in the project
