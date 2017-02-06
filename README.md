@@ -101,4 +101,10 @@ A polynomial of order 2 is fit over points for left and right lane markings sepa
 Output of execution is input image with ROI overlayed along with output image containing lane marking, curvature and position of car values
    
 ![Output windoe](https://github.com/sagarbhokre/LaneHawk/blob/master/debug_images/Output_during_execution.jpg "Output window during execution")
-#### Output during execution
+#### Output image rendered during execution
+
+
+[![EXECUTION_PREVIEW](http://img.youtube.com/vi/R97Ifw_2rio/0.jpg)](http://www.youtube.com/watch?v=R97Ifw_2rio "Output video stored during execution")
+#### Output video saved during execution
+
+https://www.youtube.com/watch?v=R97Ifw_2rio
