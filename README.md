@@ -53,6 +53,11 @@ Input image captured using imread() or capture.read() APIs is in BGR format. Thi
 #### d. Filter out pixels based on imagnitude and direction gradient thresholds
 #### e. Filter out yellow and white pixels with good amount of saturation
 #### f. Filter out yellow and white pixels with good amount of saturation
+At this stage the preprocessed binary image appears as below
+
+![Preprocessed Binary Image](https://github.com/sagarbhokre/LaneHawk/blob/master/debug_images/Debug_binary_image.jpg "Preprocessed Binary Image")
+#### Preprocessed Binary Image
+
 #### g. Filter out noise using gaussian noise filter
 #### h. Cut out Region Of Interest(ROI) and apply perspective transform to detect lane marker orientation
 Following steps are involved in transforming the input image
@@ -62,6 +67,8 @@ Following steps are involved in transforming the input image
 4. Compute Perspective transform matrix which would be used to get bird's eye view
 5. Compute inverse perspective transform matrix to project lanes and markings on image
 6. Warp input image based on perspective transform matrix just computed (this gives us bird's eye view of the ROI)
+
+Image representation of perspective correction is shown in the upcoming section where sliding windows and polynomial fitting on lane pixels is explained.
 
 ## 3. Fit a second order polynomial over lane markings for both lanes separately
 #### a. Compute histogram of binary image along y axis
@@ -96,6 +103,15 @@ A polynomial of order 2 is fit over points for left and right lane markings sepa
 - Convert the difference in centres to meters
 
 ## 6. Overlay radius of curvature and centre of car on image
+Radius of curvature of the road is computed using the polyfit coordinates obtained while regressing the lane marker pixels
+
+    left_curverad = ((1+(2 * left_fit[0] * y_eval + left_fit[1])^2)^1.5) / np.absolute(2*left_fit[0])
+    right_curverad = ((1+(2 * right_fit[0] * y_eval + right_fit[1])^2)^1.5) / np.absolute(2*right_fit[0])
+
+Centre of the car is assumed to be image centre (camera mounted in centre) and lane marking from polynomial fitting is considred to be lane centre. Difference between image centre and lane centre is calculated to get number of pixes off the centre of lane. This value is then converted to meter using meter per pixel parameter along x axis.
+
+    off_centre_meter = (image_center_pixel - lane_centre_pixel) * x_meter_per_pixel
+
 
 ## 7. Save overlayed image into video and render on screen
 Output of execution is input image with ROI overlayed along with output image containing lane marking, curvature and position of car values
@@ -131,6 +147,7 @@ After changing threshold parameters, it was very time consuming to wait for the 
 ## Improvements in algorithm/pipeline
 1. To further improve this algorithm, a logic could be implemented which keeps a track of the place in image where a lane marking was detected last. Next iteration would start from the last known location of lane marking. This would reduce the histogram computation step to estimate the starting point for lane marking
 2. Another improvement could be to detect one lane marking (say left lane) and use that as an estimate to detect the other lane marking (right lane)
+3. Performance of this implementation needs to be improved by a factor of at least 2x if it needs to be considered for deployment in a test system
 
 ### Failure scenarios (hypothetical cases)
 1. This algorithm could fail to work during bad weather conditions (e.g. fog, rain)
