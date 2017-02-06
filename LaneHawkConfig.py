@@ -1,15 +1,15 @@
 import numpy as np
 ALGORITHM = 2
-ROI = {'t':0.6300, 'b':0.0700, 'tw':0.1300, 'bw':0.0000}
-GRADX_MIN = 65
+ROI = {'t':0.6300, 'b':0.0700, 'tw':0.1710, 'bw':0.0000}
+GRADX_MIN = 37
 GRADX_MAX = 255
-GRADY_MIN = 48
+GRADY_MIN = 25
 GRADY_MAX = 254
-MAG_MIN   = 171
+MAG_MIN   = 110
 MAG_MAX   = 255
 DIR_MIN   = 0.30
 DIR_MAX   = 1.40
 HLS_H_MIN = 0
 HLS_H_MAX = 61
-HLS_S_MIN = 101
+HLS_S_MIN = 92
 HLS_S_MAX = 255

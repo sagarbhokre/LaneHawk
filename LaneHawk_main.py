@@ -13,6 +13,8 @@ CHESSBOARD_HEIGHT = 6
 DEBUG = 0
 IMAGE_WIDTH = 1280
 IMAGE_HEIGHT = 720
+SKIP_COUNT = 0
+
 def calibrate_camera():
     imgpoints, objpoints = [], []
     resfile = 'cam_calib_params.pkl'
@@ -698,18 +700,18 @@ if __name__ == '__main__':
     try:
         while(1):
             filename, img = get_frame()
-
-            IMAGE_WIDTH = img.shape[1]
-            IMAGE_HEIGHT = img.shape[0]
-            if out is None:
-                out = cv2.VideoWriter('output.avi',fourcc, 25.0, (IMAGE_WIDTH,IMAGE_HEIGHT))
-            print "Processing " + filename + " :: "
-            ret = worker_func(img)
-            if ret == 1:
-                master = Tk()
-                master.bind('<Escape>', close)
-                wgxm, wgxx, wgym, wgyx, wmm, wmx, wdm, wdx, whhm, whhx, whsm, whsx, rtw, rbw = setup_GUI(img)
-                mainloop()
+            if frame_count > SKIP_COUNT:
+                IMAGE_WIDTH = img.shape[1]
+                IMAGE_HEIGHT = img.shape[0]
+                if out is None:
+                    out = cv2.VideoWriter('output.avi',fourcc, 25.0, (IMAGE_WIDTH,IMAGE_HEIGHT))
+                print "Processing " + filename + " :: "
+                ret = worker_func(img)
+                if ret == 1:
+                    master = Tk()
+                    master.bind('<Escape>', close)
+                    wgxm, wgxx, wgym, wgyx, wmm, wmx, wdm, wdx, whhm, whhx, whsm, whsx, rtw, rbw = setup_GUI(img)
+                    mainloop()
     except StopIteration:
         print "Failed "
         exit(0)
