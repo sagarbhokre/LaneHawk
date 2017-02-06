@@ -5,9 +5,6 @@ from Tkinter import *
 import Image, ImageTk
 import matplotlib.pyplot as plt
 
-ym_per_pix = 100 * 30/720 # meters per pixel in y dimension
-xm_per_pix = 100 * 3.7/700 # meters per pixel in x dimension
-
 CHESSBOARD_WIDTH  = 9
 CHESSBOARD_HEIGHT = 6
 DEBUG = 0
@@ -195,6 +192,10 @@ def preprocess_image(img):
     # Filter out noise using gaussian noise filter
     combined = gaussian_blur(combined, GAUSS_KER)
 
+    if DEBUG == 1:
+        cv2.imshow("Preprocessed Image", scale_img_vals(combined, 255))
+        cv2.imwrite("./debug_images/Debug_binary_image.jpg", scale_img_vals(combined, 255))
+
     # Cut out Region of interest and apply perspective transform to detect lane marker orientation
     ROI_warped, ROI_warped_full = prespective_transform(combined)
 
@@ -325,6 +326,21 @@ def gaussian_blur(img, kernel_size):
     """Applies a Gaussian Noise kernel"""
     return cv2.GaussianBlur(img, (kernel_size, kernel_size), 0)
 
+# Workaround: Actual implementation with values 30/720 for ym_per_pixel and 3.7/700 for xm_per_pixel lead to error while executing
+'''
+# Error message:
+  File "LaneHawk_main.py", line 340, in calculate_curvature
+    lfit_cr = np.polyfit(ym, xlm, 2)
+  File "/usr/local/lib/python2.7/dist-packages/numpy/lib/polynomial.py", line 589, in polyfit
+    c, resids, rank, s = lstsq(lhs, rhs, rcond)
+  File "/usr/local/lib/python2.7/dist-packages/numpy/linalg/linalg.py", line 1919, in lstsq
+    0, work, lwork, iwork, 0)
+ValueError: On entry to DLASCL parameter number 4 had an illegal value
+'''
+# Current implemetnation is converting to cm per pixel in both dimensions and then converting the final result back to meter scale
+ym_per_pix = 100 *  30/720 # meters per pixel in y dimension
+xm_per_pix = 100 * 3.7/700 # meters per pixel in x dimension
+
 def calculate_curvature(yvals, xl, xr):
     # convert values from pixels to meter per pixel scale
     xlm = [x*xm_per_pix for x in xl]
@@ -334,15 +350,15 @@ def calculate_curvature(yvals, xl, xr):
     # Fit the lane markings on coordinates
     lfit_cr = np.polyfit(ym, xlm, 2)
     rfit_cr = np.polyfit(ym, xrm, 2)
-    y_eval = np.max(ym)*ym_per_pix
+    y_eval = np.max(ym)
 
     # Calculate radii of curvature
-    left_curverad = ((1 + (2*lfit_cr[0]*y_eval + lfit_cr[1])**2)**1.5) / np.absolute(2*lfit_cr[0])/100
-    right_curverad = ((1 + (2*rfit_cr[0]*y_eval + rfit_cr[1])**2)**1.5) / np.absolute(2*rfit_cr[0])/100
+    left_curverad = (((1 + (2*lfit_cr[0]*y_eval + lfit_cr[1])**2)**1.5) / np.absolute(2*lfit_cr[0]))/100
+    right_curverad = (((1 + (2*rfit_cr[0]*y_eval + rfit_cr[1])**2)**1.5) / np.absolute(2*rfit_cr[0]))/100
 
     # Compute centre of lane markings and centre of vehicle
     off_centre_pixels = ((IMAGE_WIDTH/2) - (xl[-1] + xr[-1])/2)
-    off_centre_m = off_centre_pixels*ym_per_pix/100
+    off_centre_m = off_centre_pixels*xm_per_pix/100
 
     return left_curverad, right_curverad, off_centre_m
 
