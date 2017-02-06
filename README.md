@@ -115,3 +115,26 @@ An output video is also included in the project
 [![EXECUTION_PREVIEW](http://img.youtube.com/vi/R97Ifw_2rio/0.jpg)](https://github.com/sagarbhokre/LaneHawk/blob/master/output.avi "Output video included in project")
 https://github.com/sagarbhokre/LaneHawk/blob/master/output.avi
 #### Output video included in the project
+
+
+## Problems/issues faced
+
+#### General threshold adjustment
+While working on this implementation, adjusting the thresholds and tuning the parameters seemed to be a challenge. The x, y gradients would allow lane markings to be visible and screw up detection in other regions of the video. To tackle this problem a GUI based threshold adjustment was implemented which allowed visualization at preprocessing step while generate binary images. This reduced development and debugging effort
+ 
+#### Frame based parameter adjustment
+Another issue while implementing and debugging was to wait for the frame to be rendered and then figure out which frame failed to detect lanes properly. This was tackled by adding keyboard interface and using the latest frame being rendered to adjust the threshold parameters. In the python application whenever a lane marking is being detected properly, press any key (except 'ESC') and the GUI would be opened to adjust preprocessing parameters
+
+#### Skipping frames to reach frame of interest
+After changing threshold parameters, it was very time consuming to wait for the frame to arrive and then debug. Repeating this process until the parameters were fine tuned would have been tedious. To overcome this situation 'frame_skip' logic was implemented. This avoids processing any frames until the skip count elapses (See variable 'SKIP_COUNT' line 16 in LaneHawk_main.py)
+
+## Improvements in algorithm/pipeline
+1. To further improve this algorithm, a logic could be implemented which keeps a track of the place in image where a lane marking was detected last. Next iteration would start from the last known location of lane marking. This would reduce the histogram computation step to estimate the starting point for lane marking
+2. Another improvement could be to detect one lane marking (say left lane) and use that as an estimate to detect the other lane marking (right lane)
+
+### Failure scenarios (hypothetical cases)
+1. This algorithm could fail to work during bad weather conditions (e.g. fog, rain)
+2. Dusty roads would also significantly affect the performance of this algorithm
+3. During bright sunny days on roads with lighter surface, the algorithm could fail to detect lane markings
+4. Occlusion or presence another car in front could raise serious concerns
+5. The implementation could also fail for very sharp turns where only one lane marker is visible
